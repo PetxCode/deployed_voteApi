@@ -62,6 +62,14 @@ const createVote = async (req, res) => {
         _id: user?._id,
         fullName: user?.fullName,
         user,
+        voter: user,
+      });
+
+      await votersModel.create({
+        _id: user?._id,
+        fullName: user?.fullName,
+        user,
+        voter: user,
       });
 
       getUser.voter?.push(new mongoose.Types.ObjectId(vote._id));
@@ -82,22 +90,3 @@ module.exports = {
   createVote,
   readPresidencyVote,
 };
-
-// export const deleteVote = async (
-//   req: Request,
-//   res: Response
-// ): Promise<Response> => {
-//   try {
-//     const getUser = await userModel.findById(req.params.id);
-//     const voter = await votersModel.findByIdAndRemove(req.params.votersID);
-
-//     getUser?.voter?.pull!(new mongoose.Types.ObjectId(voter!._id));
-//     getUser?.save();
-//     console.log(getUser?.voter);
-//     console.log(voter);
-
-//     return res.status(201).json({ message: "voter deleted" });
-//   } catch (err) {
-//     return res.json({ message: `error message: ${err}` });
-//   }
-// };

@@ -30,15 +30,15 @@ const io = new Server(server, { cors: { origin: "*" } });
 
 const url = "mongodb://localhost/votersDB";
 const newURL =
-	"mongodb+srv://AuthClass:AuthClass@codelab.u4drr.mongodb.net/VotersDB?retryWrites=true&w=majority";
+  "mongodb+srv://AuthClass:AuthClass@codelab.u4drr.mongodb.net/VotersDB?retryWrites=true&w=majority";
 const urlOnline =
-	"mongodb+srv://OneChurch:OneChurch@cluster0.q3zol.mongodb.net/youthCouncil?retryWrites=true&w=majority";
+  "mongodb+srv://OneChurch:OneChurch@cluster0.q3zol.mongodb.net/youthCouncil?retryWrites=true&w=majority";
 
 const url2 =
-	"mongodb+srv://newStudent:newStudent@cluster0.gkpjkup.mongodb.net/voterDB?retryWrites=true&w=majority";
+  "mongodb+srv://newStudent:newStudent@cluster0.gkpjkup.mongodb.net/voterDB?retryWrites=true&w=majority";
 
 mongoose.connect(urlOnline).then(() => {
-	console.log("Database is now well connected!");
+  console.log("Database is now well connected!");
 });
 
 app.use(express.json({ extended: true }));
@@ -46,11 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get("/", (req, res) => {
-	return res.json({ message: "This is the Voting API" });
-});
-
-app.get("/start", (req, res) => {
-	return res.json({ message: "This is the Voting API" });
+  return res.json({ message: "This is the Voting API" });
 });
 
 app.use("/api/user", user);
@@ -72,95 +68,89 @@ app.use("/api/legalVote", legalVote);
 
 const db = mongoose.connection;
 
-io.on("connection", (socket) => {
-	console.log(`User connected ${socket.id}`);
+db.on("open", () => {
+  const observer = db.collection("candidates").watch();
 
-	// We can write our socket event listeners in here...
+  observer.on("change", (change) => {
+    console.log(change);
+    if (change.operationType === "insert") {
+      io.emit("candidate");
+    }
+  });
 });
 
 db.on("open", () => {
-	const observer = db.collection("candidates").watch();
+  const observer = db.collection("legalVotes").watch();
 
-	observer.on("change", (change) => {
-		console.log(change);
-		if (change.operationType === "insert") {
-			io.emit("candidate");
-		}
-	});
+  observer.on("change", (change) => {
+    if (change.operationType === "insert") {
+      io.emit("legal");
+    }
+  });
 });
 
 db.on("open", () => {
-	const observer = db.collection("legalVotes").watch();
+  const observer = db.collection("pross").watch();
 
-	observer.on("change", (change) => {
-		if (change.operationType === "insert") {
-			io.emit("legal");
-		}
-	});
+  observer.on("change", (change) => {
+    if (change.operationType === "insert") {
+      io.emit("pro");
+    }
+  });
 });
 
 db.on("open", () => {
-	const observer = db.collection("pross").watch();
+  const observer = db.collection("secretaryVotes").watch();
 
-	observer.on("change", (change) => {
-		if (change.operationType === "insert") {
-			io.emit("pro");
-		}
-	});
+  observer.on("change", (change) => {
+    if (change.operationType === "insert") {
+      io.emit("secretary");
+    }
+  });
 });
 
 db.on("open", () => {
-	const observer = db.collection("secretaryVotes").watch();
+  const observer = db.collection("socialSecs").watch();
 
-	observer.on("change", (change) => {
-		if (change.operationType === "insert") {
-			io.emit("secretary");
-		}
-	});
+  observer.on("change", (change) => {
+    if (change.operationType === "insert") {
+      io.emit("social");
+    }
+  });
 });
 
 db.on("open", () => {
-	const observer = db.collection("socialSecs").watch();
+  const observer = db.collection("vicePresys").watch();
 
-	observer.on("change", (change) => {
-		if (change.operationType === "insert") {
-			io.emit("social");
-		}
-	});
+  observer.on("change", (change) => {
+    if (change.operationType === "insert") {
+      io.emit("vicepresident");
+    }
+  });
 });
 
 db.on("open", () => {
-	const observer = db.collection("vicePresys").watch();
+  const observer = db.collection("presys").watch();
 
-	observer.on("change", (change) => {
-		if (change.operationType === "insert") {
-			io.emit("vicepresident");
-		}
-	});
+  observer.on("change", (change) => {
+    if (change.operationType === "insert") {
+      io.emit("president");
+    }
+  });
 });
 
 db.on("open", () => {
-	const observer = db.collection("presys").watch();
+  const observer = db.collection("voters").watch();
 
-	observer.on("change", (change) => {
-		if (change.operationType === "insert") {
-			io.emit("president");
-		}
-	});
-});
-
-db.on("open", () => {
-	const observer = db.collection("voters").watch();
-
-	observer.on("change", (change) => {
-		if (change.operationType === "insert") {
-			io.emit("voter");
-		}
-	});
+  observer.on("change", (change) => {
+    if (change.operationType === "insert") {
+      io.emit("voter");
+    }
+  });
 });
 
 server.listen(process.env.PORT || port, () => {
-	console.log("");
-	console.log("server is now ready...!");
-	console.log("");
+  console.log("");
+  console.log("server is now ready...!");
+  console.log("");
 });
