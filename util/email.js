@@ -26,7 +26,8 @@ const oAuth = new google.auth.OAuth2(GOOGLE_ID, GOOGLE_SECRET, GOOGLE_REDIRECT);
 
 oAuth.setCredentials({ refresh_token: GOOGLE_REFRESHTOKEN });
 
-const url = "https://nycnvote.web.app";
+// const url = "https://nycnvote.web.app";
+const url = "https://lets-vote-right.web.app";
 const urlLocal = "localhost:2245";
 
 const verifiedUser = async (getUser) => {
