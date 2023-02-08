@@ -37,9 +37,10 @@ const verifiedByAdminFinally = async (getUser) => {
         pass: "sgczftichnkcqksx",
       },
     });
-
+  console.log("Picked!")
     const buildFile = path.join(__dirname, "../views/voterCode.ejs");
-
+    
+  console.log("Done!")
     const data = await ejs.renderFile(buildFile, {
       name: getUser?.fullName,
       organisation: getUser?.orgName,
