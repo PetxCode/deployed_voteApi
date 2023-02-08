@@ -39,7 +39,7 @@ const verifiedByAdminFinally = async (getUser) => {
     });
   console.log("Picked!")
     const buildFile = path.join(__dirname, "../views/voterCode.ejs");
-    
+
   console.log("Done!")
     const data = await ejs.renderFile(buildFile, {
       name: getUser?.fullName,
@@ -227,8 +227,8 @@ const verifiedUserFromAdmin1 = async (getUser) => {
         pass: "sgczftichnkcqksx",
       },
     });
-
-    const buildFile = path.join(__dirname, "../views/AccountCreated.ejs");
+console.log("Show me data: ")
+    // const buildFile = path.join(__dirname, "../views/getAdmin.ejs");
 
     const data = await ejs.renderFile(buildFile, {
       name: getUser.fullName,
@@ -267,7 +267,7 @@ const verifiedUserFromAdmin1 = async (getUser) => {
                   <br/>
                   <br/>
                   <a 
-                    href="https://nycn-vote.web.app/api/user/${getUser._id}/verify" 
+                    href="https://lets-vote-right.web.app/api/user/${getUser._id}/verify" 
                   referrerpolicy="no-referrer" target="_blank" 
                   style="text-decoration: none;
                   padding: 20px 30px;

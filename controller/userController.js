@@ -142,8 +142,6 @@ const VerifiedUser = async (req, res) => {
 				{ new: true },
 			);
 
-			console.log("show Data: ", getUser);
-
 			verifiedUserFromAdmin1(getUser).then((result) => {
 				console.log("sent successfully to Admin: ", result);
 			});
