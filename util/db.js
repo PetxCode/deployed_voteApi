@@ -9,7 +9,10 @@ const urlOnline =
 const url2 =
   "mongodb+srv://newStudent:newStudent@cluster0.gkpjkup.mongodb.net/voterDB?retryWrites=true&w=majority";
 
-mongoose.connect(newURL, () => {
+const url22 =
+  "mongodb+srv://PeterPan:PeterPan@codelab.eqkgv.mongodb.net/voterDB?retryWrites=true&w=majority";
+
+mongoose.connect(url22, () => {
   console.log("database is now connected...!");
 });
 
