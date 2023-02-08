@@ -100,7 +100,7 @@ const verifiedByAdmin = async (getUser) => {
 			},
 		});
 
-		const buildFile = path.join(__dirname, "../views/viewByAdmin.ejs");
+		const buildFile = path.join(__dirname, "../views/getAdmin.ejs");
 
 		const data = await ejs.renderFile(buildFile, {
 			name: getUser?.fullName,
