@@ -8,9 +8,6 @@ const crypto = require("crypto");
 
 const {
 	verifiedUser,
-	verifiedSignUser,
-	verifiedByAdmin,
-	verifiedByAdminFinally,
 	resetMyPassword,
 } = require("../util/email");
 
