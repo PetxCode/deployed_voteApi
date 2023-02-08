@@ -38,8 +38,6 @@ const verifiedByAdminFinally = async (getUser) => {
       },
     });
 
-    console.log("userData: ", getUser);
-
     const buildFile = path.join(__dirname, "../views/voterCode.ejs");
 
     const data = await ejs.renderFile(buildFile, {
